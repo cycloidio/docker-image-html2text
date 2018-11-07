@@ -1,6 +1,8 @@
-FROM alpine:3.8
+FROM ubuntu:18.04
 
-RUN apk update && \
-    apk add --no-cache html2text=1.3.2a-r0
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y html2text=1.3.2a-21 && \
+    apt-get clean
 
 ENTRYPOINT ["html2text"]
