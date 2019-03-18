@@ -1,5 +1,6 @@
 
 VERSION := "1.3.2a"
+RELEASE := "21"
 
 .PHONY: help
 help: ## Show this help
@@ -9,7 +10,7 @@ help: ## Show this help
 
 .PHONY: build
 build: ## Build the docker image
-	@docker build -t cycloid/html2text:${VERSION} .
+	@docker build --build-arg H2T_VER="${VERSION}-${RELEASE}" -t cycloid/html2text:${VERSION} .
 
 
 .PHONY: push
@@ -20,6 +21,6 @@ push: ## Push the docker image to Docker Hub
 test: build ## Test that the docker image builds correctly
 	@docker run --rm cycloid/html2text:${VERSION} -version \
 		| if ! grep "version ${VERSION}" -q; \
-		then echo "\n\nDocker image version mismatch.\nCheck that the Dockerfile isntalls the html2text version which is set in the Makefile VERSION varirable value (${VERSION})\n" >&2; \
+		then echo "\n\nDocker image version mismatch.\nCheck that the Dockerfile installs the html2text version which is set in the Makefile VERSION varirable value (${VERSION})\n" >&2; \
 		exit 1; \
 		fi
